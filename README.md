@@ -1,6 +1,17 @@
 # Miniature World Sawmill Exhibit
 
 ## Install
+
+### Easy Install
+On a fresh installation of Raspbian, run:
+
+```BASH
+export SAWMILL_VERSION=2.0.0 # the version you wish to install, must be 2.0.0 or greater 
+wget -O - https://raw.githubusercontent.com/limbicmedia/mini-world-sawmill-display/${SAWMILL_VERSION}/setup.sh | bash
+```
+
+Steps for setting up Raspbian can be found [here](https://github.com/limbicmedia/PiMediaSync)
+
 ### Step 1 - Install Raspbian operating system
 Download [Linux Debian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) and unzip the file. This will result in a `.dmg` file
 
