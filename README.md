@@ -1,109 +1,44 @@
 # Miniature World Sawmill Exhibit
+## About
+This repo is a collection of files for configuration and installation of the [PiMediaSync](https://github.com/limbicmedia/PiMediaSync) application to run the **Sawmill Exhibit** at [Miniature World](https://miniatureworld.com/), BC, Canada.
 
-## Install
-
-### Easy Install
-On a fresh installation of Raspbian, run:
+## Installation
+The installation procedure for this project has been made as simple as possible. On a fresh installation of Raspbian, run:
 
 ```BASH
 export SAWMILL_VERSION=2.0.0 # the version you wish to install, must be 2.0.0 or greater 
-wget -O - https://raw.githubusercontent.com/limbicmedia/mini-world-sawmill-display/${SAWMILL_VERSION}/setup.sh | bash
+wget -O - https://raw.githubusercontent.com/limbicmedia/mini-world-sawmill-display/${SAWMILL_VERSION}/setup.sh | sudo bash
 ```
 
-Steps for setting up Raspbian can be found [here](https://github.com/limbicmedia/PiMediaSync)
+Steps for setting up Raspbian can be found [here](https://github.com/limbicmedia/PiMediaSync).
 
-### Step 1 - Install Raspbian operating system
-Download [Linux Debian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) and unzip the file. This will result in a `.dmg` file
+### Installation Details
+The above installation command will:
+* download and install `./video/sawmill.mov` and `sawmill_config.py`
+* download and install `PiMediaSync`
+* enable `PiMediaSync` at boot (using `systemd`)
 
-#### MacOS
-Place SDCard in card reader. The card will mount, which will prevent the installation step. 
+By default:
+* `PiMediaSync` is installed in `/opt/pimediasync`
+* Sawmill files are installed in `/root/sawmill`
 
-Find where the card is mounted with:
+## Interaction
+The exhibit is activated by a button on the front of the display.
 
-```
-diskutil list
-```
+The code check for a FALLING edge on `GPIO15` (pin 10 of RPI) to activate the installation.
 
-from the list, find the `disk` associated with the SD card and unmount it with the command:
+### Button Wiring
+The diagram below shows the circuit wiring for the button.
+A `1K` resistor acts as a pull up. The small resistance is to accommodate the long wire leads running to the button. The 1µF capacitor helps reduce noise in the system.
 
-```
-diskutil unmountDisk /dev/disk#
-```
+<br>
+<img src="docs/rpi_button.png" width="50%">
 
-Finally, write the Raspbian image to the SD card:
-```
-sudo dd if=<raspbian image name>.img of=/dev/rdisk# bs=1m
-```
+### System Diagram
+Below is an image showing the physical setup of the system:
 
-### Step 2 - Enable SSH in Raspbian (optional)
-After Raspbian is written to the SD card, a drive called `boot` will be mounted. Create a file on this mounted drive called `ssh`.
-
-#### MacOS
-Run this command:
-```
-touch /Volumes/boot/ssh
-```
-
-### Step 3 - Unmount SD Card
-Once again, run:
-
-```
-diskutil unmountDisk /dev/disk#
-```
-
-to be able to pull the SD card out. Putting the SD card into the PI and boot.
-
-**Note** All subsequent steps are performed on the Raspberry PI. This can be done by attaching a keyboard and mouse OR by `SSH`ing in (assuming Step 2 was performed)
-
-### Step 4 - Expand Filesystem. , either attach a monitor and keyboard OR
-On the Pi, run:
-```
-sudo raspi-config
-```
-
-Select: `7 Advanced Options` 
-Followed by: `A1 Expand Filesystem`
-
-Then reboot the system with by running:
-```
-sudo reboot
-```
-
-### Step 5 - Install 
-On the Raspberry PI, run:
-
-```
-wget -O - https://raw.githubusercontent.com/limbicmedia/mini-world-sawmill-display/master/scripts/install.sh | bash
-```
-
-This will install all the necessary requirements (including downloading this git repo)
-
-### Step 6 - Add Video File (Optional; for systems using video)
-The desired video should be copied onto the Raspberry PI. The video can have any name and be stored at any location. It may be best to store it in the `mini-world-sawmill-display` directory:
-
-```
-/root/mini-world-sawmill-display/video
-```
-
-Once the file is copied over, the  `config.py` (located at `/root/mini-world-sawmill-display`) must be modified such that the `VIDEONAME` variable points to the directory and filename of the video. For example, the original value for this variable is:
-
-```
-VIDEONAME = "./video/sawmill.mov"
-```
-
-In this case, the video is called `sawmill.mov` and it is located--relatively to the starting point of the Python program--in a directory called `video`.
-
-**Note**: When setting `VIDEONAME` it would be best to set the value with an **ABSOLUTE** file path, e.g. `/home/pi/myvideo.mov`.
-
-
-## System Diagram
-Below is an image showing the architecture of the system:
 <br>
 <img src="docs/system_diagram.png" width="332" height="668">
 
-## Button Wiring
-The button for starting the installtion is wired as show below:
-<br>
-<img src="docs/rpi_button.png" width="100%">
-<br>
-This wiring results in the code to check for a **FALLING** edge of on GPIO15 (pin 10) to activate the installation. The *1K* resistor acts as a *Pull Up* resistor and the *1µF* capacitor helps reduce noise in the system.
+## Previous Versions
+The previous version ([v1.0.0](https://github.com/limbicmedia/mini-world-sawmill-display/releases/tag/v1.0)) of `mini-world-sawmill-display` contained all of the code necessary to run the exhibit. Since v2.0.0, the operational code has been broken out into [PiMediaSync](https://github.com/limbicmedia/PiMediaSync). This allows for more projects to be made with the core code and the configuration and support files (i.e. audio, video, etc) stored in their own space (like this repo).
