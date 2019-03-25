@@ -29,7 +29,7 @@ export PIHOSTNAME="miniworld-sawmill"
 # Setup PiMediaSync application
 SAWMILL_CONFIG_FILE="${SAWMILL_CONFIG_FILE:-sawmill_config.py}"
 export APPLICATION_FLAGS="-c${WORKDIR}/${SAWMILL_CONFIG_FILE}"
-export PIMEDIASYNC_VERSION="${PIMEDIASYNC_VERSION:-dev}"
+export PIMEDIASYNC_VERSION="${PIMEDIASYNC_VERSION:-v1.0.0}"
 wget -O - https://raw.githubusercontent.com/limbicmedia/PiMediaSync/${PIMEDIASYNC_VERSION}/scripts/install.sh | bash
 
 # install video in location used by PiMediaSync
