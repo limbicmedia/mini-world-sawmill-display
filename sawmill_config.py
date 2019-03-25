@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 
 class Config():
-    VIDEONAME = "./video/sawmill.mov" # ./ is relative to PiMediaSync repo
+    MEDIA_NAME = "./video/sawmill.mov" # ./ is relative to PiMediaSync repo
     DMX_DEVICE = "/dev/ttyUSB0"
 
     GPIO_VALUES = {
