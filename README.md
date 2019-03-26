@@ -16,12 +16,27 @@ Steps for setting up Raspbian can be found [here](https://github.com/limbicmedia
 ### Installation Details
 The above installation command will:
 * download and install `./video/sawmill.mov` and `sawmill_config.py`
-* download and install `PiMediaSync`
+* download and install `PiMediaSync` (based on the version found in [PIMEDIASYNC_VERSION](./PIMEDIASYNC_VERSION))
 * enable `PiMediaSync` at boot (using `systemd`)
 
 By default:
 * `PiMediaSync` is installed in `/opt/pimediasync`
 * Sawmill files are installed in `/root/sawmill`
+
+## Files
+This repo contains 4 main files:
+
+#### [setup.sh](./setup.sh)
+This file is responsible for installing the entire project (including PiMediaSync) and configuring it to run at boot.
+
+#### [PIMEDIASYNC_VERSION](./PIMEDIASYNC_VERSION)
+This file sets the version of PiMediaSync which will be installed.
+
+#### [sawmill_config.py](./sawmill_config.py)
+This file is responsible for setting all of the necessary config variables in the PiMediaSync application. The core functionality of the exhibit is encoded in this file.
+
+#### [sawmill.mov](./video/sawmill.mov)
+This is the video file played for this exhibit.
 
 ## Interaction
 The exhibit is activated by a button on the front of the display.
